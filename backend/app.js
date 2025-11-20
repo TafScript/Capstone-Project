@@ -21,5 +21,7 @@ app.use("/api/notes", notesRoutes);
 
 // Main route
 app.get("/", (req, res) => {
-    res.json("Backend running");
+    res.json({message: "Server API running"});
 })
+
+export default app;
