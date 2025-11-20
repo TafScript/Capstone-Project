@@ -5,7 +5,7 @@ import connectDB from "./config/db.js";
 
 // Routes
 import authRoutes from "./routes/authRoutes.js";
-import watchlistRoutes from " ./routes/watchlsitRoutes.js";
+import watchlistRoutes from "./routes/watchlistRoutes.js";
 import notesRoutes from "./routes/notesRoutes.js";
 
 const app = express();
