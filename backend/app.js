@@ -10,6 +10,11 @@ import notesRoutes from "./routes/notesRoutes.js";
 
 const app = express();
 
+console.log("AUTH:", authRoutes);
+console.log("WATCHLIST:", watchlistRoutes);
+console.log("NOTES:", notesRoutes);
+
+
 //Middleware
 app.use(cors());
 app.use(express.json());
