@@ -10,6 +10,6 @@ const userSchema = new mongoose.Schema({
         required: true,
         unique: true,
     },
-})
+});
 
 export default mongoose.model("User", userSchema);
