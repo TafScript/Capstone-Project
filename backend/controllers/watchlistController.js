@@ -40,3 +40,19 @@ export const updateWatchlist = async (req, res) => {
         console.log(err);
     }
 }
+
+export const deleteFromlist = async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const deletedItem = await Watchlist.findByIdAndDelete(id);
+
+        if (!deletedItem) {
+            console.log("Item not found.");
+        }
+
+        res.json("Item removed from watchlist.")
+    } catch (err) {
+        console.log(err)
+    }
+}
