@@ -16,8 +16,27 @@ export const addToWatchlist = async (req, res) => {
     
     try {
         const newItem = await Watchlist.create({name, symbol, priceTarget, notes});
+        res.json(newItem);
     } catch (err){
-
+        console.log(err);
     }
 
 };
+
+
+export const updateWatchlist = async (req, res) => {
+    const { id } = req.params;
+    const { name, symbol, priceTarget, notes} = req.body;
+
+    try{
+        const updatedItem = await Watchlist.findByIdAndUpdate(id, { name, symbol, priceTarget, notes})
+
+        if (!updatedItem) {
+            console.log("Item(s) not found.")
+        }
+
+        res.json(updatedItem);
+    } catch (err) {
+        console.log(err);
+    }
+}
