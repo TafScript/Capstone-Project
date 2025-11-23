@@ -10,3 +10,14 @@ export const getWatchlist = async (req, res) => {
         console.log(err)
     }
 };
+
+export const addToWatchlist = async (req, res) => {
+    const { name, symbol, priceTarget, notes } = req.body;
+    
+    try {
+        const newItem = await Watchlist.create({name, symbol, priceTarget, notes});
+    } catch (err){
+
+    }
+
+};
