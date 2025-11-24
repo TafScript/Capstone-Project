@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const watchlistSchema = mongoose.Shchema(
+const watchlistSchema = mongoose.Schema(
     {
         name: {
             type: String,

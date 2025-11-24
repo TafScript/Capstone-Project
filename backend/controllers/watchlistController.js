@@ -41,7 +41,7 @@ export const updateWatchlist = async (req, res) => {
     }
 }
 
-export const deleteFromlist = async (req, res) => {
+export const deleteFromWatchlist = async (req, res) => {
     const { id } = req.params;
 
     try {
