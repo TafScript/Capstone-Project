@@ -22,7 +22,7 @@ export const addWatchlistItem = async (item) => {
     });
     if (!res.ok) {console.log("Failed to add watchlist items")}
     return res.json();
-  } catch (error) {
+  } catch (err) {
     console.log("Error in addWatchlistItem: ", err);
   }
 };
@@ -66,7 +66,7 @@ export const getNotes = async () => {
     const res = await fetch(`${BASE_URL}/notes`);
     if (!res.ok) {"failed to fetch notes"};
     return res.json();
-  } catch (error) {
+  } catch (err) {
     console.log("Error in getNotes:", err);
   }
 };
@@ -84,3 +84,31 @@ export const addNote = async (note) => {
         console.error("Error in addNote:", err);
   }
 }
+
+export const updateNote = async (id, data) => {
+  try {
+    const res = await fetch(`${BASE_URL}/notes/${id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+    if (!res.ok) throw new Error("Failed to update note");
+    return await res.json();
+  } catch (err) {
+    console.err("Error in updateNote:", err);
+    throw err;
+  }
+};
+
+export const deleteNote = async (id) => {
+  try {
+    const res = await fetch(`${BASE_URL}/notes/${id}`, {
+      method: "DELETE",
+    });
+    if (!res.ok) throw new Error("Failed to delete note");
+    return true;
+  } catch (err) {
+    console.log("Error in deleteNote:", err);
+    
+  }
+};
