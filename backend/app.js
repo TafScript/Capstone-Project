@@ -8,11 +8,14 @@ import authRoutes from "./routes/authRoutes.js";
 import watchlistRoutes from "./routes/watchlistRoutes.js";
 import notesRoutes from "./routes/notesRoutes.js";
 
+dotenv.config();
+
 const app = express();
 
-console.log("AUTH:", authRoutes);
-console.log("WATCHLIST:", watchlistRoutes);
-console.log("NOTES:", notesRoutes);
+
+//console.log("AUTH:", authRoutes);
+//console.log("WATCHLIST:", watchlistRoutes);
+//console.log("NOTES:", notesRoutes);
 
 
 //Middleware

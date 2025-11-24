@@ -6,7 +6,6 @@ import app from "./app.js";
 console.log("Loaded MONGO_URI:", process.env.MONGO_URI);
 
 
-
 //Mongo DB connection
 connectDB();
 
