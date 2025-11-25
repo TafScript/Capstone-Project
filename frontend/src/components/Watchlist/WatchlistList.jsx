@@ -24,15 +24,24 @@ export default function WatchlistList() {
 
   return (
     <div>
-      <h2>Watchlist</h2>
+      <h1>Watchlist</h1>
+
+      <WatchlistForm refresh={loadData} />
+
       <ul>
         {items.map((item) => (
           <li key={item._id}>
-            {item.name} ({item.symbol}) - Target: {item.priceTarget}
+            <strong>{item.name}</strong> ({item.symbol}) – Target: {item.priceTarget}
+            <br />
+            Notes: {item.notes}
+            <br />
             <button onClick={() => handleDelete(item._id)}>Delete</button>
           </li>
         ))}
       </ul>
+
+      <h2>Top 50 Coins Dashboard</h2>
+      <TopCoinsDashboard />
     </div>
   );
 }

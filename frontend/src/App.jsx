@@ -1,21 +1,27 @@
-import React from "react";
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import { Routes, Route, NavLink } from "react-router-dom";
 import WatchlistPage from "./pages/WatchlistPage";
-import NotesPage from "./pages/notesPage";
+import NotesPage from "./pages/NotesPage"; // Make sure the file name matches the folder
+import HomePage from "./pages/HomePage";
+import "./App.css";
 
-export default function App() {
+function App() {
   return (
-    <Router>
-      <nav>
-        <Link to="/">Watchlist</Link>
-        <Link to="/notes">Notes</Link>
+    <>
+      <nav className="navbar">
+        <NavLink to="/" className="nav-item">Home</NavLink>
+        <NavLink to="/watchlist" className="nav-item">Watchlist</NavLink>
+        <NavLink to="/notes" className="nav-item">Notes</NavLink>
       </nav>
 
       <Routes>
-        <Route path="/" element={<WatchlistPage />} />
+        <Route path="/" element={<HomePage />} />
+        <Route path="/watchlist" element={<WatchlistPage />} />
         <Route path="/notes" element={<NotesPage />} />
       </Routes>
-    </Router>
+    </>
   );
 }
+
+export default App;
+
 

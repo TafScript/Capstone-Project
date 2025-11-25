@@ -1,30 +1,17 @@
-import React, { useState, useEffect } from "react";
-import { getNotes, addNote, deleteNote } from "../api/api";
+import { useState, useEffect } from "react";
+import NotesForm from "../components/Notes/NotesForm"; // your notes form
+import TopCoinsDashboard from "../components/TopCoinsDashboard"; // dashboard component
+import { getNotes, deleteNote } from "../api/api"; // your API functions
 
 export default function NotesPage() {
   const [notes, setNotes] = useState([]);
-  const [formData, setFormData] = useState({ title: "", content: "" });
 
   const loadNotes = async () => {
     try {
       const data = await getNotes();
       setNotes(data);
     } catch (err) {
-      console.log("Error fetching notes: ", err);
-    }
-  };
-
-  const handleChange = (e) =>
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      await addNote(formData);
-      setFormData({ title: "", content: "" });
-      loadNotes();
-    } catch (err) {
-      console.log("Error adding note:", err);
+      console.error("Error loading notes:", err);
     }
   };
 
@@ -33,7 +20,7 @@ export default function NotesPage() {
       await deleteNote(id);
       loadNotes();
     } catch (err) {
-      console.log("Error deleting note:", err);
+      console.error("Error deleting note:", err);
     }
   };
 
@@ -42,34 +29,35 @@ export default function NotesPage() {
   }, []);
 
   return (
-    <div>
+    <div className="container">
       <h1>Notes</h1>
-      
-      <form onSubmit={handleSubmit}>
-        <input
-          name="title"
-          value={formData.title}
-          onChange={handleChange}
-          placeholder="Title"
-        />
-        <textarea
-          name="content"
-          value={formData.content}
-          onChange={handleChange}
-          placeholder="Content"
-        />
-        <button type="submit">Add Note</button>
-      </form>
 
-      <ul>
-        {notes.map((note) => (
-          <li key={note._id}>
-            <strong>{note.title}</strong>
-            <p>{note.content}</p>
-            <button onClick={() => handleDelete(note._id)}>Delete</button>
-          </li>
-        ))}
-      </ul>
+      {/* Notes Form */}
+      <NotesForm refresh={loadNotes} />
+
+      {/* Notes List */}
+      <div className="cards-container">
+        {notes.length === 0 ? (
+          <p>No notes yet.</p>
+        ) : (
+          notes.map((note) => (
+            <div className="card" key={note._id}>
+              <h3>{note.title}</h3>
+              <p>{note.content}</p>
+              <button onClick={() => handleDelete(note._id)}>Delete</button>
+            </div>
+          ))
+        )}
+      </div>
+
+      {/* Top 50 Coins Dashboard */}
+      <h2 className="section-title" style={{ textAlign: "center", marginTop: "40px" }}>
+        Top 50 Coin Data and Analytics
+      </h2>
+
+      {/* Ensure TopCoinsDashboard handles images internally */}
+      <TopCoinsDashboard />
     </div>
   );
 }
+
