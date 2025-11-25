@@ -79,10 +79,9 @@ export default function WatchlistPage() {
     <div className="container">
       <h1>Watchlist</h1>
 
-      {/* Add-to-watchlist form */}
+      
       <WatchlistForm refresh={loadWatchlist} />
 
-      {/* Watchlist items */}
       <div className="cards-grid">
         {items.map((item) => {
           const priceInfo = watchlistPrices[item.symbol.toLowerCase()];

@@ -1,6 +1,6 @@
 import { Routes, Route, NavLink } from "react-router-dom";
 import WatchlistPage from "./pages/WatchlistPage";
-import NotesPage from "./pages/NotesPage"; // Make sure the file name matches the folder
+import NotesPage from "./pages/notesPage"; // Make sure the file name matches the folder
 import HomePage from "./pages/HomePage";
 import "./App.css";
 
