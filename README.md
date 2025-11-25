@@ -12,7 +12,7 @@
     - Organize by title and content
   - Top 50 Coins Dashboard
     - Live data for top 50 coins (price, market cap, 24h change)
-    - Scrollable dashboard for easy browsing
+    - Scrollable dashboard for easy browsing.
 
 - Technologies
   - Frontend: React, Vite, CSS
