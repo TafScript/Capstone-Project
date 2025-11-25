@@ -111,3 +111,10 @@ export const deleteNote = async (id) => {
     
   }
 };
+
+export {
+  getWatchlist,
+  deleteWatchlistItem,
+  updateWatchlistItem,
+};
+

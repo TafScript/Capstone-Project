@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { getWatchlist, deleteWatchlistItem } from "../api/api";
+import { getWatchlist, deleteWatchlistItem, updateWatchlistItem } from "../api/api";
 import WatchlistForm from "../components/Watchlist/WatchlistForm";
+import {
+    getWatchlist,
+    deleteWatchlisItem,
+    updateWatchlistItem
+} from "../.api/api";
 
 export default function WatchlistPage() {
   const [items, setItems] = useState([]);
@@ -13,6 +18,21 @@ export default function WatchlistPage() {
       console.error("Error fetching watchlist:", error);
     }
   };
+
+  const handleEdit = async (item) => {
+
+    try {
+        const updated = { ...item, priceTarget: "NEW VALUE" }; // or open a modal/input
+        await updateWatchlistItem(item._id, updated);
+        loadData();
+    } catch (err) {
+        console.log(err);
+    }
+
+};
+
+
+
 
   const handleDelete = async (id) => {
     try {
@@ -43,6 +63,7 @@ export default function WatchlistPage() {
             Notes: {item.notes}
             <br />
             <button onClick={() => handleDelete(item._id)}>Delete</button>
+            <button onClick={() => handleEdit(item)}>Edit</button>
           </li>
         ))}
       </ul>
