@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react";
-import { getWatchlist, deleteWatchlistItem } from "../api/api";
+import { getWatchlist, deleteWatchlistItem, updateWatchlistItem } from "../api/api"; 
 import WatchlistForm from "../components/Watchlist/WatchlistForm";
+import TopCoinsDashboard from "../components/TopCoinsDashboard";
 
 export default function WatchlistPage() {
   const [items, setItems] = useState([]);
   const [watchlistPrices, setWatchlistPrices] = useState({});
-  const [topCoins, setTopCoins] = useState([]);
-  const [loadingTop, setLoadingTop] = useState(true);
-  const [error, setError] = useState(null);
+  const [editingItemId, setEditingItemId] = useState(null);
+  const [editingData, setEditingData] = useState({ name: "", symbol: "", priceTarget: "", notes: "" });
 
   // Load watchlist from backend
   const loadWatchlist = async () => {
@@ -16,22 +16,10 @@ export default function WatchlistPage() {
       setItems(data);
     } catch (err) {
       console.error("Error loading watchlist:", err);
-      setError("Failed to load watchlist.");
     }
   };
 
-  // Delete an item
-  const handleDelete = async (id) => {
-    try {
-      await deleteWatchlistItem(id);
-      loadWatchlist();
-    } catch (err) {
-      console.error("Error deleting item:", err);
-      setError("Failed to delete item.");
-    }
-  };
-
-  // Fetch live prices for watchlist
+  // Fetch live prices from CoinGecko
   const loadWatchlistPrices = async () => {
     if (items.length === 0) return;
 
@@ -44,103 +32,113 @@ export default function WatchlistPage() {
       setWatchlistPrices(data);
     } catch (err) {
       console.error("Error fetching watchlist prices:", err);
-      setError("Failed to fetch watchlist prices.");
     }
   };
 
-  // Fetch top 50 coins
-  const loadTop50 = async () => {
+  // Delete a watchlist item
+  const handleDelete = async (id) => {
     try {
-      const res = await fetch(
-        "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=50&page=1&sparkline=false"
-      );
-      const data = await res.json();
-      setTopCoins(data);
+      await deleteWatchlistItem(id);
+      loadWatchlist();
     } catch (err) {
-      console.error("Error fetching top coins:", err);
-      setError("Failed to fetch top coins.");
-    } finally {
-      setLoadingTop(false);
+      console.error("Error deleting item:", err);
     }
   };
 
-  // Load watchlist and top coins on mount
+  // Start editing
+  const handleEdit = (item) => {
+    setEditingItemId(item._id);
+    setEditingData({
+      name: item.name,
+      symbol: item.symbol,
+      priceTarget: item.priceTarget,
+      notes: item.notes,
+    });
+  };
+
+  // Save edit
+  const handleSave = async () => {
+    try {
+      await updateWatchlistItem(editingItemId, editingData);
+      setEditingItemId(null);
+      loadWatchlist();
+    } catch (err) {
+      console.error("Error updating item:", err);
+    }
+  };
+
   useEffect(() => {
     loadWatchlist();
-    loadTop50();
   }, []);
 
-  // Update watchlist prices whenever items change
   useEffect(() => {
     loadWatchlistPrices();
-
-    // Auto-refresh every 30 seconds
-    const interval = setInterval(() => {
-      loadWatchlistPrices();
-    }, 30000);
-
-    return () => clearInterval(interval);
   }, [items]);
 
   return (
-    <div className="dashboard-container">
-      <h1 style={{ textAlign: "center" }}>Crypto Dashboard</h1>
+    <div className="container">
+      <h1>Watchlist</h1>
 
-      {error && <p style={{ color: "red", textAlign: "center" }}>{error}</p>}
+      {/* Add-to-watchlist form */}
+      <WatchlistForm refresh={loadWatchlist} />
 
-      {/* Watchlist Section */}
-      <div className="dashboard-section">
-        <h2>Your Watchlist</h2>
-        <WatchlistForm refresh={loadWatchlist} />
-        <div className="cards-grid">
-          {items.length === 0 && <p>No items in your watchlist yet.</p>}
-          {items.map(item => {
-            const priceInfo = watchlistPrices[item.symbol.toLowerCase()];
-            return (
-              <div className="card" key={item._id}>
-                <h3>{item.name} ({item.symbol.toUpperCase()})</h3>
-                <p><strong>Target:</strong> ${Number(item.priceTarget).toLocaleString()}</p>
-                <p>
-                  <strong>Current:</strong>{" "}
-                  {priceInfo
-                    ? `$${priceInfo.usd.toLocaleString()} (${priceInfo.usd_24h_change?.toFixed(2)}%)`
-                    : "Loading..."}
-                </p>
-                <p>{item.notes}</p>
-                <button onClick={() => handleDelete(item._id)}>Delete</button>
-              </div>
-            );
-          })}
-        </div>
+      {/* Watchlist items */}
+      <div className="cards-grid">
+        {items.map((item) => {
+          const priceInfo = watchlistPrices[item.symbol.toLowerCase()];
+
+          return (
+            <div className="card" key={item._id}>
+              {editingItemId === item._id ? (
+                <>
+                  <input
+                    value={editingData.name}
+                    onChange={(e) => setEditingData({ ...editingData, name: e.target.value })}
+                    placeholder="Name"
+                  />
+                  <input
+                    value={editingData.symbol}
+                    onChange={(e) => setEditingData({ ...editingData, symbol: e.target.value })}
+                    placeholder="Symbol"
+                  />
+                  <input
+                    value={editingData.priceTarget}
+                    onChange={(e) => setEditingData({ ...editingData, priceTarget: e.target.value })}
+                    placeholder="Price Target"
+                  />
+                  <input
+                    value={editingData.notes}
+                    onChange={(e) => setEditingData({ ...editingData, notes: e.target.value })}
+                    placeholder="Notes"
+                  />
+                  <button onClick={handleSave}>Save</button>
+                  <button onClick={() => setEditingItemId(null)}>Cancel</button>
+                </>
+              ) : (
+                <>
+                  <h3>{item.name} ({item.symbol.toUpperCase()})</h3>
+                  <p><strong>Target:</strong> ${item.priceTarget}</p>
+                  <p>
+                    <strong>Current:</strong>{" "}
+                    {priceInfo
+                      ? `$${priceInfo.usd.toLocaleString()} (${priceInfo.usd_24h_change?.toFixed(2)}%)`
+                      : "Loading..."}
+                  </p>
+                  <p>{item.notes}</p>
+                  <button onClick={() => handleEdit(item)}>Edit</button>
+                  <button onClick={() => handleDelete(item._id)}>Delete</button>
+                </>
+              )}
+            </div>
+          );
+        })}
       </div>
 
-      {/* Top 50 Coins Section */}
-      <div className="dashboard-section">
-        <h2 style={{ textAlign: "center" }}>Top 50 Coin Data & Analytics</h2>
-        {loadingTop ? (
-          <p style={{ textAlign: "center" }}>Loading top coins...</p>
-        ) : (
-          <div className="cards-grid scrollable">
-            {topCoins.map(coin => (
-              <div className="card" key={coin.id}>
-                <div className="coin-header">
-                  <img src={coin.image} alt={coin.name} className="coin-logo" />
-                  <h3>{coin.name} ({coin.symbol.toUpperCase()})</h3>
-                </div>
-                <p><strong>Price:</strong> ${coin.current_price.toLocaleString()}</p>
-                <p>
-                  <strong>24h Change:</strong>{" "}
-                  <span style={{ color: coin.price_change_percentage_24h >= 0 ? "lime" : "red" }}>
-                    {coin.price_change_percentage_24h.toFixed(2)}%
-                  </span>
-                </p>
-                <p><strong>Market Cap:</strong> ${coin.market_cap.toLocaleString()}</p>
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
+      {/* Top 50 Coins Dashboard */}
+      <h2 style={{ textAlign: "center", marginTop: "40px" }}>
+        Top 50 Coin Data and Analytics
+      </h2>
+      <TopCoinsDashboard showImages={true} />
     </div>
   );
 }
-
