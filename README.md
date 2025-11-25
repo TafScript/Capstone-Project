@@ -35,10 +35,6 @@
   - Open browser at `http://localhost:5173`
   - Live Deployment site: https://capstonecrypto.netlify.app/
 
-- Deployment
-  - Backend: Render
-  - Frontend: Netlify
-
 - Future Improvements
   - Add user authentication
   - Price alerts
