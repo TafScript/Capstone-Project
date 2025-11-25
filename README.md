@@ -1,16 +1,48 @@
-# React + Vite
+# Capstone Project: Crypto Watchlist & Notes Dashboard
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+- Full-stack web app to track cryptocurrencies and take notes
+- Features:
+  - Watchlist
+    - Add crypto coins to watchlist
+    - View live prices and 24h change
+    - Edit targets and notes
+    - Delete items
+  - Notes
+    - Add, edit, and delete notes
+    - Organize by title and content
+  - Top 50 Coins Dashboard
+    - Live data for top 50 coins (price, market cap, 24h change)
+    - Scrollable dashboard for easy browsing
 
-Currently, two official plugins are available:
+- Technologies
+  - Frontend: React, Vite, CSS
+  - Backend: Node.js, Express
+  - Database: MongoDB
+  - API: CoinGecko API
+  - Hosting: Render (backend), Netlify (frontend)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Setup
+  - Clone repo: `git clone https://github.com/TafScript/Capstone-Project.git`
+  - Backend:
+    - `cd backend`
+    - `npm install`
+    - Create `.env` with `MONGO_URI` and `PORT`
+    - `npm run start`
+  - Frontend:
+    - `cd ../frontend`
+    - `npm install`
+    - `npm run dev`
+  - Open browser at `http://localhost:5173`
+  - Live Deployment site: https://capstonecrypto.netlify.app/
 
-## React Compiler
+- Deployment
+  - Backend: Render
+  - Frontend: Netlify
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- Future Improvements
+  - Add user authentication
+  - Price alerts
+  - Mobile responsiveness and better styling
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- License
+  - MIT License
