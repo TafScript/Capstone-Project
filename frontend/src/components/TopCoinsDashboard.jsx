@@ -20,7 +20,7 @@ export default function TopCoinsDashboard() {
   useEffect(() => {
     fetchTopCoins();
 
-    // Optional: refresh every 60 seconds
+    //refresh every 60 seconds, still buggy
     const interval = setInterval(fetchTopCoins, 60000);
     return () => clearInterval(interval);
   }, []);
