@@ -44,5 +44,4 @@
   - Price alerts
   - Mobile responsiveness and better styling
 
-- License
-  - MIT License
+
