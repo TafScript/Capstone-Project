@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { getWatchlist, deleteWatchlistItem, updateWatchlistItem } from "../api/api"; 
 import WatchlistForm from "../components/Watchlist/WatchlistForm";
-import TopCoinsDashboard from "../components/TopCoinsDashboard";
+import TopCoinsDashboard from "../components/TopCoinsDashboardTemp";
 
 export default function WatchlistPage() {
   const [items, setItems] = useState([]);

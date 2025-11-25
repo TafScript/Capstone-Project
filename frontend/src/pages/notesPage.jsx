@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import NotesForm from "../components/Notes/NotesForm"; // your notes form
-import TopCoinsDashboard from "../components/TopCoinsDashboard"; // dashboard component
+import TopCoinsDashboard from "../components/TopCoinsDashboardTemp"; // dashboard component
 import { getNotes, deleteNote, updateNote } from "../api/api"; // API functions
 
 export default function NotesPage() {
@@ -8,7 +8,7 @@ export default function NotesPage() {
   const [editingNoteId, setEditingNoteId] = useState(null);
   const [editingData, setEditingData] = useState({ title: "", content: "" });
 
-  // Load notes
+  // Load notes.
   const loadNotes = async () => {
     try {
       const data = await getNotes();
