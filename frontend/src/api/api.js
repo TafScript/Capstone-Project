@@ -67,7 +67,7 @@ export const getNotes = async () => {
     if (!res.ok) {"failed to fetch notes"};
     return res.json();
   } catch (err) {
-    console.log("Error in getNotes:", err);
+    console.log(err);
   }
 };
 
@@ -81,7 +81,7 @@ export const addNote = async (note) => {
         if (!res.ok){console.log("Failed to add note.")};
         return res.json();
     } catch (err) {
-        console.log("Error in addNote:", err);
+        console.log(err);
   }
 }
 
@@ -93,10 +93,9 @@ export const updateNote = async (id, data) => {
       body: JSON.stringify(data),
     });
     if (!res.ok) {console.log("Failed to update note.")}
-    return await res.json();
+    return res.json();
   } catch (err) {
-    console.err("Error in updateNote:", err);
-    throw err;
+    console.err(err);
   }
 };
 
@@ -106,9 +105,9 @@ export const deleteNote = async (id) => {
       method: "DELETE",
     });
     if (!res.ok) {console.log("Failed to delete note.")}
-    return true;
+    console.log("Succesfully deleted note.");
   } catch (err) {
-    console.log("Error in deleteNote:", err);
+    console.log(err);
     
   }
 };
