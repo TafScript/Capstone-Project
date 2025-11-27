@@ -12,7 +12,11 @@
     - Organize by title and content
   - Top 50 Coins Dashboard
     - Live data for top 50 coins (price, market cap, 24h change)
+<<<<<<< HEAD
     - Scrollable dashboard for easy browsing
+=======
+    - Scrollable dashboard for easy browsing.
+>>>>>>> c99934109159380828cfab6f36db467e90b649f1
 
 - Technologies
   - Frontend: React, Vite, CSS
@@ -35,6 +39,7 @@
   - Open browser at `http://localhost:5173`
   - Live Deployment site: https://capstonecrypto.netlify.app/
 
+<<<<<<< HEAD
 - Deployment
   - Backend: Render
   - Frontend: Netlify
@@ -48,3 +53,11 @@
   - MIT License
 
 
+=======
+- Future Improvements
+  - Add user authentication
+  - Price alerts
+  - Mobile responsiveness and better styling
+
+
+>>>>>>> c99934109159380828cfab6f36db467e90b649f1
