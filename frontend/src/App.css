@@ -41,25 +41,25 @@ input::placeholder {
   opacity: 0.8;
 }
 
-/* Buttons */
+
 button {
-  background-color: #00ff00; /* Green buttons */
+  background-color: #00ff00; 
   color: #121212;
   font-weight: b
 }
 
-/* Navbar */
+
 .navbar {
   display: flex;
   justify-content: center;
   gap: 20px;
   padding: 15px;
-  background-color: #1f1f1f; /* slightly lighter dark for navbar */
+  background-color: #1f1f1f; 
   margin-bottom: 20px;
-  border-bottom: 2px solid #00ff00; /* green accent */
+  border-bottom: 2px solid #00ff00; 
 }
 
-/* Nav links */
+
 .nav-link {
   color: #00ff00;
   font-weight: bold;
@@ -71,7 +71,7 @@ button {
 
 .nav-link:hover {
   background-color: #00ff00;
-  color: #121212; /* dark text on hover */
+  color: #121212; 
 }
 
 /* Active link */
